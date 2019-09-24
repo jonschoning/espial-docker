@@ -1,0 +1,18 @@
+# /etc/systemd/system/espial.service
+
+[Unit]
+Description=Espial
+Requires=docker.service
+After=docker.service
+StartLimitIntervalSec=60
+StartLimitBurst=2
+
+[Service]
+WorkingDirectory=/opt/espial
+ExecStart=/opt/espial/espial-svc-start
+ExecStop=/opt/espial/espial-svc-stop
+TimeoutStartSec=0
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

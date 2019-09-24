@@ -1,0 +1,3 @@
+#!/bin/sh
+make up-d && make logs | tee -a espial.log
+
