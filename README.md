@@ -1,3 +1,5 @@
+This repository contains the instruction and commands for running Espial from the pre-built docker images on Docker Hub.
+
 # Espial
 
 Espial is an open-source, web-based bookmarking server.
