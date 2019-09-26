@@ -74,6 +74,18 @@ which references:
 
 adjust `espial-svc-start` to control where logs are stored.
 
+## Base Image
+
+`jonschoning/espial:espial`
+
+is based on 
+
+`jonschoning/espial:scratch`
+
+which can be found here:
+
+https://github.com/jonschoning/espial-scratch
+
 ## Defaults
 
 default app http port: `3000`
