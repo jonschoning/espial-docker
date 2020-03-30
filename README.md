@@ -90,6 +90,4 @@ https://github.com/jonschoning/espial-scratch
 
 default app http port: `3000`
 
-default ekg http port: `8000`
-
 ssl: use reverse proxy
