@@ -49,13 +49,19 @@ docker-compose exec espial ./migration createuser --conn /app/data/espial.sqlite
  - see `docker-compose exec espial ./migration` for all available cli commands
  - the `/app/data/` prefix is necessary as it is the internal volume inside the container, see `docker-compose.yml` to adjust 
 
-5. Import a bookmark file for a user (optional)
+5. Import a pinboard bookmark file for a user (optional)
 
 ```
 docker-compose exec espial ./migration importbookmarks --conn /app/data/espial.sqlite3 --userName myusername --bookmarkFile /app/data/sample-bookmarks.json
 ```
 
-6. Stop Espial
+6. Import a firefox bookmark file for a user (optional)
+
+```
+docker-compose exec espial ./migration importfirefoxbookmarks --conn /app/data/espial.sqlite3 --userName myusername --bookmarkFile /app/data/firefox-bookmarks.json
+```
+    
+7. Stop Espial
 
 ```
 ./espial-svc-stop
