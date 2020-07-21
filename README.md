@@ -38,7 +38,7 @@ make pull
 ./espial-svc-start
 ```
 
- - When the app starts, it should create the DB `espial.sqlite` in the current directory (or according to `docker-compose.yml`)
+ - When the app starts, it should create the DB `espial.sqlite3` in the current directory (or according to `docker-compose.yml`)
 
 4. Create a user
 
