@@ -6,6 +6,7 @@ services:
       - "3000:3000"
     volumes:
       - '.:/app/data'
+    network_mode: host
     environment:
       - IP_FROM_HEADER=true
       - SQLITE_DATABASE=/app/data/espial.sqlite3
