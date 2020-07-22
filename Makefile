@@ -15,4 +15,6 @@ logs:
 	@docker logs -f --since `date -u +%FT%TZ` `docker-compose ps -q espial`
 shell:
 	docker-compose exec espial sh
+#update:                                                                     
+#        sudo systemctl stop espial.service && HUB_REPO=jonschoning make pull && sudo systemctl start espial.service && sudo systemctl status espial.service 
 

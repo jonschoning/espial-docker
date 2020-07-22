@@ -9,4 +9,8 @@ services:
     environment:
       - IP_FROM_HEADER=true
       - SQLITE_DATABASE=/app/data/espial.sqlite3
-      - ekg_datadir=ekg
+      # - DETAILED_LOGGING=true
+      # - SHOULD_LOG_ALL=true
+      # - ARCHIVE_SOCKS_PROXY_HOST=localhost 
+      # - ARCHIVE_SOCKS_PROXY_PORT=8888
+      # - SOURCE_CODE_URI=https://github.com/jonschoning/espial
