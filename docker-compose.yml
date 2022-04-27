@@ -17,3 +17,4 @@ services:
       # - ARCHIVE_SOCKS_PROXY_HOST=localhost 
       # - ARCHIVE_SOCKS_PROXY_PORT=8888
       # - SOURCE_CODE_URI=https://github.com/jonschoning/espial
+      # - ALLOW_NON_HTTP_URL_SCHEMES=false
