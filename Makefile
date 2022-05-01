@@ -1,20 +1,23 @@
+_DOCKER:=docker
+_DOCKER_COMPOSE:=docker compose
+
 .PHONY: none
 none:
 	@echo "no command"
 pull:
-	docker-compose pull espial
+	$(_DOCKER_COMPOSE) pull espial
 createdb:
-	docker-compose exec espial ./migration createdb --conn /app/data/espial.sqlite3
+	$(_DOCKER_COMPOSE) exec espial ./migration createdb --conn /app/data/espial.sqlite3
 up:
-	docker-compose up espial
+	$(_DOCKER_COMPOSE) up espial
 up-d:
-	@docker-compose up -d espial
+	@$(_DOCKER_COMPOSE) up -d espial
 down:
-	docker-compose down
+	$(_DOCKER_COMPOSE) down
 logs:
-	@docker logs -f --since `date -u +%FT%TZ` `docker-compose ps -q espial`
+	@$(_DOCKER) logs -f --since `date -u +%FT%TZ` `$(_DOCKER_COMPOSE) ps -q espial`
 shell:
-	docker-compose exec espial sh
+	$(_DOCKER_COMPOSE) exec espial sh
 #update:                                                                     
 #        sudo systemctl stop espial.service && HUB_REPO=jonschoning make pull && sudo systemctl start espial.service && sudo systemctl status espial.service 
 

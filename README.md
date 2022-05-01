@@ -16,7 +16,7 @@ https://github.com/jonschoning/espial
 
 ## Running the pre-built Docker Hub Image (POSIX Only)
 
- - These commands use docker-compose with settings in `docker-compose.yml`
+ - These commands use `docker compose` with settings in `docker-compose.yml`
  - see `Makefile` for additional commands
 
 1. Clone this repository
@@ -43,22 +43,22 @@ make pull
 4. Create a user
 
 ```
-docker-compose exec espial ./migration createuser --conn /app/data/espial.sqlite3 --userName myusername --userPassword myuserpassword
+docker compose exec espial ./migration createuser --conn /app/data/espial.sqlite3 --userName myusername --userPassword myuserpassword
 ```
 
- - see `docker-compose exec espial ./migration` for all available cli commands
+ - see `docker compose exec espial ./migration` for all available cli commands
  - the `/app/data/` prefix is necessary as it is the internal volume inside the container, see `docker-compose.yml` to adjust 
 
 5. Import a pinboard bookmark file for a user (optional)
 
 ```
-docker-compose exec espial ./migration importbookmarks --conn /app/data/espial.sqlite3 --userName myusername --bookmarkFile /app/data/sample-bookmarks.json
+docker compose exec espial ./migration importbookmarks --conn /app/data/espial.sqlite3 --userName myusername --bookmarkFile /app/data/sample-bookmarks.json
 ```
 
 6. Import a firefox bookmark file for a user (optional)
 
 ```
-docker-compose exec espial ./migration importfirefoxbookmarks --conn /app/data/espial.sqlite3 --userName myusername --bookmarkFile /app/data/firefox-bookmarks.json
+docker compose exec espial ./migration importfirefoxbookmarks --conn /app/data/espial.sqlite3 --userName myusername --bookmarkFile /app/data/firefox-bookmarks.json
 ```
     
 7. Stop Espial
