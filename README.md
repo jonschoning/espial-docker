@@ -43,7 +43,7 @@ make pull
 4. Create a user
 
 ```
-docker compose exec espial ./migration createuser --conn /app/data/espial.sqlite3 --userName myusername --userPassword myuserpassword
+docker compose exec espial ./migration createuser --userName myusername --userPassword myuserpassword
 ```
 
  - see `docker compose exec espial ./migration` for all available cli commands
@@ -52,13 +52,13 @@ docker compose exec espial ./migration createuser --conn /app/data/espial.sqlite
 5. Import a pinboard bookmark file for a user (optional)
 
 ```
-docker compose exec espial ./migration importbookmarks --conn /app/data/espial.sqlite3 --userName myusername --bookmarkFile /app/data/sample-bookmarks.json
+docker compose exec espial ./migration importbookmarks --userName myusername --bookmarkFile /app/data/sample-bookmarks.json
 ```
 
 6. Import a firefox bookmark file for a user (optional)
 
 ```
-docker compose exec espial ./migration importfirefoxbookmarks --conn /app/data/espial.sqlite3 --userName myusername --bookmarkFile /app/data/firefox-bookmarks.json
+docker compose exec espial ./migration importfirefoxbookmarks --userName myusername --bookmarkFile /app/data/firefox-bookmarks.json
 ```
     
 7. Stop Espial
@@ -86,11 +86,7 @@ adjust `espial-svc-start` to control where logs are stored.
 
 is based on 
 
-`jonschoning/espial:scratch`
-
-which can be found here:
-
-https://github.com/jonschoning/espial-scratch
+`gcr.io/distroless/base-debian12`
 
 ## Defaults
 

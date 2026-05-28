@@ -2,13 +2,12 @@ version: '3'
 services:
   espial:
     image: 'jonschoning/espial:espial'
-    # ports:
-    #   - "3000:3000"
+    ports:
+      - "80:3000"
     volumes:
       - '.:/app/data'
-    network_mode: host
     environment:
-      - PORT=80
+      - PORT=3000
       - IP_FROM_HEADER=true
       - SQLITE_DATABASE=/app/data/espial.sqlite3
       # - SSL_ONLY=false
