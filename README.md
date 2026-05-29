@@ -90,6 +90,8 @@ is based on
 
 ## Defaults
 
-default app http port: `3000`
+As specified in `docker-compose.yml`:
+ - internal app port `3000` is exposed to port `80` on host
+ - adjust as necessary
 
 ssl: use reverse proxy
