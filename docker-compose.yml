@@ -2,6 +2,7 @@ version: '3'
 services:
   espial:
     image: 'jonschoning/espial:espial'
+    restart: unless-stopped
     ports:
       - "80:3000"
     volumes:
@@ -17,7 +18,7 @@ services:
       # - ARCHIVE_SOCKS_PROXY_PORT=8888
       # - SOURCE_CODE_URI=https://github.com/jonschoning/espial
       # - ALLOW_NON_HTTP_URL_SCHEMES=false
-      - ARCHIVE-BACKEND=disabled
-      # - ARCHIVE-BACKEND=wayback-machine
-      # - WAYBACK-MACHINE-ACCESS-KEY=ACCESS_KEY
-      # - WAYBACK-MACHINE-SECRET-KEY=SECRET_KEY
+      - ARCHIVE_BACKEND=disabled
+      # - ARCHIVE_BACKEND=wayback-machine
+      # - WAYBACK_MACHINE_ACCESS_KEY=ACCESS_KEY
+      # - WAYBACK_MACHINE_SECRET_KEY=SECRET_KEY
