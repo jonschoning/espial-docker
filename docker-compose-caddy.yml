@@ -1,0 +1,26 @@
+services:
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./caddy/data:/data
+      - ./caddy/config:/config
+
+  espial:
+    image: 'jonschoning/espial:espial'
+    restart: unless-stopped
+    expose:
+      - "3000"
+    volumes:
+      - '.:/app/data'
+    environment:
+      - PORT=3000
+      - IP_FROM_HEADER=true
+      - SQLITE_DATABASE=/app/data/espial.sqlite3
+      # - ARCHIVE_BACKEND=wayback-machine
+      # - WAYBACK_MACHINE_ACCESS_KEY=
+      # - WAYBACK_MACHINE_SECRET_KEY=

@@ -1,0 +1,7 @@
+espial.example.com {
+    reverse_proxy espial:3000
+}
+
+archivebox.example.com {
+    reverse_proxy archivebox:8000
+}

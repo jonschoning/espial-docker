@@ -47,7 +47,7 @@ docker compose exec espial ./migration createuser --userName myusername --userPa
 ```
 
  - see `docker compose exec espial ./migration` for all available cli commands
- - the `/app/data/` prefix is necessary as it is the internal volume inside the container, see `docker-compose.yml` to adjust 
+ - use the `/app/data/` file prefix to access files on the host according to the bind mount volume inside the container, see `docker-compose.yml`
 
 5. Import a pinboard bookmark file for a user (optional)
 
@@ -94,4 +94,50 @@ As specified in `docker-compose.yml`:
  - internal app port `3000` is exposed to port `80` on host
  - adjust as necessary
 
-ssl: use reverse proxy
+### Request IP Logging
+
+Espial supports the `IP_FROM_HEADER` environment variable for request logging.
+
+- `IP_FROM_HEADER=true`: log the client IP from the `X-Real-IP` or `X-Forwarded-For` header when present, and fall back to the peer address if neither header is available.
+- `IP_FROM_HEADER=false`: log the peer address from the HTTP connection.
+
+Only set `IP_FROM_HEADER=true` if your application is safely positioned **behind a trusted reverse proxy**.
+
+### SSL / Reverse Proxy
+
+Espial does not terminate TLS itself. Run it behind a reverse proxy that handles HTTPS and forwards traffic to Espial over HTTP.
+
+For container-based deployment examples, including production-oriented layouts, see the `espial-docker` repository:
+
+- https://github.com/jonschoning/espial-docker
+
+Minimal [Caddy](https://github.com/caddyserver/caddy) example:
+
+Localhost without a real domain:
+
+```caddyfile
+https://localhost:3050 {
+    reverse_proxy localhost:3000
+}
+```
+
+or with a domain:
+
+```caddyfile
+espial.example.com {
+  reverse_proxy 127.0.0.1:3000
+}
+```
+
+With the domain setup:
+
+- Caddy terminates TLS for `espial.example.com`.
+- Espial continues listening on HTTP, locally on `127.0.0.1:3000`
+  - If using Docker Compose, it would like like `espial:3000`
+- Set `IP_FROM_HEADER=true` only when Espial is reachable solely through that trusted proxy.
+
+If you are using Cloudflare:
+
+- Prefer Cloudflare SSL mode `Full (strict)`.
+- use `header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}`
+- If traffic can reach Espial directly without passing through your trusted proxy, do not enable `IP_FROM_HEADER=true`, because client IP headers can be spoofed.

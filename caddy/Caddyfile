@@ -1,0 +1,3 @@
+espial.example.com {
+    reverse_proxy espial:3000
+}
