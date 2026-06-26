@@ -28,6 +28,7 @@ services:
       - ARCHIVEBOX_PASSWORD=${ARCHIVEBOX_PASSWORD:-change-me}
       - ARCHIVEBOX_TAG=${ARCHIVEBOX_TAG:-espial}
       - ARCHIVEBOX_PLUGINS=${ARCHIVEBOX_PLUGINS:-title,favicon,singlefile,screenshot}
+      # - LANGUAGE_DEFAULT=en
 
   archivebox:
     image: ${ARCHIVEBOX_IMAGE:-archivebox/archivebox:0.7}

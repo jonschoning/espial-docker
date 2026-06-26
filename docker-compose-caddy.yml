@@ -24,3 +24,4 @@ services:
       # - ARCHIVE_BACKEND=wayback-machine
       # - WAYBACK_MACHINE_ACCESS_KEY=
       # - WAYBACK_MACHINE_SECRET_KEY=
+      # - LANGUAGE_DEFAULT=en
