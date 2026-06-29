@@ -21,6 +21,7 @@ services:
       - PORT=3000
       - IP_FROM_HEADER=true
       - SQLITE_DATABASE=/app/data/espial.sqlite3
+      - SSL_ONLY=true
       # - ARCHIVE_BACKEND=wayback-machine
       # - WAYBACK_MACHINE_ACCESS_KEY=
       # - WAYBACK_MACHINE_SECRET_KEY=

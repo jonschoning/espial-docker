@@ -103,13 +103,13 @@ Espial supports the `IP_FROM_HEADER` environment variable for request logging.
 
 Only set `IP_FROM_HEADER=true` if your application is safely positioned **behind a trusted reverse proxy**.
 
-### SSL / Reverse Proxy
+### TLS / Reverse Proxy
 
-Espial does not terminate TLS itself. Run it behind a reverse proxy that handles HTTPS and forwards traffic to Espial over HTTP.
+A reverse proxy is the recommended approach for production deployments. Set `SSL_ONLY=true` whenever Espial is served over HTTPS to enable the `Secure` cookie flag and HTTP→HTTPS redirects.
 
-For container-based deployment examples, including production-oriented layouts, see the `espial-docker` repository:
+#### Recommended: Reverse Proxy (Caddy, nginx, Cloudflare Tunnel, …)
 
-- https://github.com/jonschoning/espial-docker
+Run Espial behind a reverse proxy that terminates TLS and forwards plain HTTP to Espial. This gives you automatic certificate management, HTTP/2 and HTTP/3 at the edge, and cleaner separation of concerns.
 
 Minimal [Caddy](https://github.com/caddyserver/caddy) example:
 
@@ -133,7 +133,7 @@ With the domain setup:
 
 - Caddy terminates TLS for `espial.example.com`.
 - Espial continues listening on HTTP, locally on `127.0.0.1:3000`
-  - If using Docker Compose, it would like like `espial:3000`
+  - If using Docker Compose, it would look like `espial:3000`
 - Set `IP_FROM_HEADER=true` only when Espial is reachable solely through that trusted proxy.
 
 If you are using Cloudflare:
@@ -141,3 +141,24 @@ If you are using Cloudflare:
 - Prefer Cloudflare SSL mode `Full (strict)`.
 - use `header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}`
 - If traffic can reach Espial directly without passing through your trusted proxy, do not enable `IP_FROM_HEADER=true`, because client IP headers can be spoofed.
+
+#### Optional: In-Process TLS
+
+For simple local or LAN deployments where a reverse proxy is impractical, Espial can terminate TLS directly. Mount your certificate and key files into the container and set the environment variables:
+
+```yaml
+environment:
+  TLS_CERT_FILE: /app/data/tls/cert.pem
+  TLS_KEY_FILE:  /app/data/tls/key.pem
+  SSL_ONLY: true
+volumes:
+  - './tls:/app/data/tls:ro'
+```
+
+Espial reloads the certificate from disk automatically every 12 hours. To trigger an immediate reload without restarting the container:
+
+```bash
+docker compose kill -s HUP espial
+```
+
+See the [Espial README](https://github.com/jonschoning/espial#tls--reverse-proxy) for full details including Let's Encrypt and self-signed certificate setup.
