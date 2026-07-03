@@ -1,5 +1,11 @@
 espial.example.com {
-    reverse_proxy espial:3000
+    # keepalive below Espial's Warp server timeout (30s default) so Caddy
+    # never reuses a pooled connection Warp may have already closed as idle
+    reverse_proxy espial:3000 {
+        transport http {
+            keepalive 15s
+        }
+    }
 }
 
 archivebox.example.com {
