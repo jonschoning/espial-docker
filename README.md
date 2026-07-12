@@ -14,10 +14,12 @@ The easist way for logged-in users to add bookmarks, is with the "bookmarklet", 
 
 https://github.com/jonschoning/espial
 
-## Running the pre-built Docker Hub Image (POSIX Only)
+## Running the pre-built Docker Hub Image
 
  - These commands use `docker compose` with settings in `docker-compose.yml`
- - see `Makefile` for additional commands
+ - Requires [Docker](https://docs.docker.com/get-docker/) (with Compose v2) on any platform: Linux, macOS, or Windows
+ - POSIX shells (Linux, macOS, WSL, Git Bash) use `make`/`./espial-svc-*` — see `Makefile` for additional commands
+ - Windows PowerShell uses `espial.ps1`/`espial-svc-*.ps1`, which mirror the same targets
 
 1. Clone this repository
 
@@ -28,14 +30,30 @@ cd espial-docker
 
 2. Pull the image from Docker Hub
 
+POSIX:
+
 ```
 make pull
 ```
 
+Windows (PowerShell):
+
+```powershell
+.\espial.ps1 pull
+```
+
 3. Start Espial
+
+POSIX:
 
 ```
 ./espial-svc-start
+```
+
+Windows (PowerShell):
+
+```powershell
+.\espial-svc-start.ps1
 ```
 
  - When the app starts, it should create the DB `espial.sqlite3` in the current directory (or according to `docker-compose.yml`)
@@ -63,12 +81,23 @@ docker compose exec espial ./migration importfirefoxbookmarks --userName myusern
     
 7. Stop Espial
 
+POSIX:
+
 ```
 ./espial-svc-stop
 ```
 
+Windows (PowerShell):
 
-## SystemD Service
+```powershell
+.\espial-svc-stop.ps1
+```
+
+> Note: `docker compose exec` commands (steps 4-6) are identical on every platform since they run inside the container.
+
+## Running at Startup
+
+### Linux: SystemD Service
 
 copy this repo to `/opt/espial/`
 
@@ -79,6 +108,16 @@ which references:
   - `espial-svc-stop`
 
 adjust `espial-svc-start` to control where logs are stored.
+
+### Windows
+
+`docker-compose.yml` already sets `restart: unless-stopped`, so once Docker Desktop is running, Espial restarts automatically along with it — no separate service is required.
+
+If you want Espial to start as soon as you log in (before manually opening Docker Desktop), add a shortcut to `espial-svc-start.ps1` to your Startup folder (`shell:startup`), or register a scheduled task with Task Scheduler that runs:
+
+```powershell
+powershell.exe -ExecutionPolicy Bypass -File "C:\path\to\espial-docker\espial-svc-start.ps1"
+```
 
 ## Base Image
 

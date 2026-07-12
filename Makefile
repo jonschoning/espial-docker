@@ -10,7 +10,7 @@ none:
 pull:
 	$(_DOCKER_COMPOSE) pull espial
 createdb:
-	$(_DOCKER_COMPOSE) exec espial ./migration createdb --conn /app/data/espial.sqlite3
+	$(_DOCKER_COMPOSE) exec espial ./migration createdb
 up:
 	$(_DOCKER_COMPOSE) up espial
 up-d:

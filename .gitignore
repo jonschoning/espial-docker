@@ -1,1 +1,2 @@
-espial.*
+*.sqlite3
+*.log
