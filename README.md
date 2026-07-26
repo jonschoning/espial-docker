@@ -142,6 +142,27 @@ Espial supports the `IP_FROM_HEADER` environment variable for request logging.
 
 Only set `IP_FROM_HEADER=true` if your application is safely positioned **behind a trusted reverse proxy**.
 
+### Session Key (`client_session_key.aes`)
+
+Espial encrypts and signs login session cookies with a key at  `config/client_session_key.aes` inside the container. 
+If it does not exist, a key is auto-generated inside the container.
+However, switching to a new espial will cause a new key to be re-generating, forcing users to log in again.
+
+To avoid the having to re-login when switching to a new docker image, Set `CLIENT_SESSION_KEY` to pin a stable key across recreations instead:
+
+```yaml
+environment:
+  - CLIENT_SESSION_KEY=<base64-value>
+```
+
+To generate `<base64-value>`, use the `generatesessionkey` migration command:
+
+```
+docker compose exec espial ./migration generatesessionkey
+```
+
+Copy the printed value into `docker-compose.yml` (or an `.env` file) so it stays fixed across future deployments. Treat it like a secret: anyone with the key can forge valid session cookies.
+
 ### TLS / Reverse Proxy
 
 A reverse proxy is the recommended approach for production deployments. Set `SSL_ONLY=true` whenever Espial is served over HTTPS to enable the `Secure` cookie flag and HTTP→HTTPS redirects.

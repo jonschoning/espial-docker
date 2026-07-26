@@ -21,7 +21,8 @@ services:
       - PORT=3000
       - IP_FROM_HEADER=true
       - SSL_ONLY=true
-      - SQLITE_DATABASE=/app/data/espial.sqlite3
+      - CLIENT_SESSION_KEY=${CLIENT_SESSION_KEY}
+      # - SQLITE_DATABASE=/app/data/espial.sqlite3
       - ARCHIVE_BACKEND=archivebox07
       - ARCHIVEBOX_URL=${ARCHIVEBOX_URL:-http://archivebox:8000}
       - ARCHIVEBOX_PUBLIC_URL=${ARCHIVEBOX_PUBLIC_URL:-https://archivebox.example.com}
